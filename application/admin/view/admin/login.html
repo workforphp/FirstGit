@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="__QT__/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="__QT__/css/login.css">
+	<script type="text/javascript" src="__QT__/js/jquery.min.js"></script>
+</head>
+<body>
+	<h1>欢迎来到教务管理系统</h1>
+	
+	<div>
+		
+		<div class="login">
+			<form class="form" action="" method="post">
+				<div class="login-title">
+					LOGIN IN
+				</div>
+				<div class="login-input">
+					<input placeholder="用户名" class="in form-control" type="text" name="username">
+				</div>
+				<div class="login-input">
+					<input placeholder="密码" class="in form-control" type="password" name="password">
+				</div>
+				<div class="login-input">
+					<!-- <input placeholder="验证码" class="in form-control" type="text"><div>{:captcha_img()}</div> -->
+					<input class="code form-control" placeholder="输入验证码" type="text" name="code">
+  					<div style="display: inline-block;"><img src="{:captcha_src()}" onclick="this.src=this.src"></div>
+				</div>		
+				<div class="role">
+					<div><input type="radio" id="student" value="student" checked="checked" name="role"><label for="student">学生登录</label></div>
+					<div><input type="radio" id="teacher" value="teacher" name="role"><label for="teacher">教师登录</label></div>
+					<div><input type="radio" id="admin" value="admin" name="role"><label for="admin">管理员登录</label></div>
+				</div>		
+				<div class="sub">
+					<input type="button" class="send btn btn-success" value="登录" name="">
+				</div>
+			</form>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript">
+	$(function(){
+		$('.send').on('click', function(){
+			$.ajax({
+				type : 'post',
+				url : "{:url('checkLogin')}",
+				data : $("form").serialize(),
+				dataType : 'json',
+				success : function(data){
+					// alert(data);
+					if(data == '1'){
+						alert('登录成功，正在为您跳转...');
+						window.location.href="{:url('Admin/index')}";
+					}else{
+						alert(data);
+						window.location.href="login.html";
+					}
+				},
+			});
+		});
+	});
+	
+</script>
+</html>

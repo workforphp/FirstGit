@@ -1,0 +1,115 @@
+{extend name="common/base"}
+
+{block name="seo"}
+	<title>{$title|default='标题'}</title>
+	<meta name="keywords" content="{$keywords|default='关键字'}">
+	<meta name="description" content="{$desc|default='描述'}">
+	<style type="text/css">
+		.main {
+			width: 600px;
+			height: 400px;
+			margin: 20px auto;
+			/*background: red;*/
+			text-align: center;
+		}
+		
+		.main input,.main select {
+			margin-left: 20px;
+			margin-top: 20px;
+			width: 400px;			
+			display: inline-block;
+		}
+		.main label {
+			width: 80px;
+			text-align: center;
+			/*background: yellow;*/
+		}
+		.sub {
+			margin-top: 30px;
+			width: 120px;
+		}
+	</style>
+{/block}
+
+{block name="content"}
+	{include file="common/header"}
+	<div class="page-content-area">
+		<form class="main">
+			<div class="add">
+				<label for="name">姓名*</label><input id="name" class="form-control" type="text" name="name">
+
+			</div>
+			<div class="add">
+				<label for="degree">学历</label>
+				<select name="degree" class="form-control">
+					<option value="1" selected>专科</option>
+					<option value="2" >本科</option>
+					<option value="3" >研究生</option>
+				</select>
+			</div>
+			<div class="add">			
+				<label for="school">毕业学校</label><input id="school" class="form-control" type="text" name="school">
+			</div>
+			<div class="add">			
+				<label for="mobile">手机号码</label><input id="mobile" class="form-control" type="text" name="mobile">
+			</div>
+			<div class="add">
+			<label>负责班级</label>		
+				<select class="form-control">
+					{volist name="gradeInfo" id="vo"}
+					<option value="{$vo.id}">{$vo.name}</option>
+					{/volist}
+				</select>
+			</div>
+			<div class="add">			
+				<label for="status">状态</label>
+				<select class="form-control" name="status" id="status">
+					<option value="1">启用</option>
+					<option value="0">不启用</option>
+				</select>
+			</div>
+
+			<div>
+				<button class="sub btn btn-success">提交</button>	
+			</div>
+
+		</form>
+		
+
+		
+	</div>
+
+{/block}
+
+{block name="newjs"}
+<script>
+	$(function(){
+		$('.sub').on('click', function(){
+			$.ajax({
+				type : "POST",
+				url : "{:url('teacher/teacherAdd')}",
+				data : $('form').serialize(),
+				dataType : 'json',
+				success : function(data){
+					alert(data);
+					// if(data == 1){
+
+					// 	// alert('成功添加老师');
+					// 	// window.location.href="{:url('teacher/teacherList')}";
+					// }else{
+					// 	alert('添加老师失败...');
+					// }
+				}
+
+			});
+
+
+		});
+	});
+
+</script>
+{/block}
+
+
+
+

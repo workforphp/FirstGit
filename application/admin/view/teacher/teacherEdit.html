@@ -1,0 +1,51 @@
+{extend name="common/base"}
+
+{block name="seo"}
+<title>{$title|default="标题"}</title>
+<meta name="keywords" content="{$keywords|default='关键字'}">
+<meta name="description" content="{$desc|default='描述'}">
+{/block}
+{block name="top"}{/block}
+{block name="menu"}{/block}
+{block name="header"}{/block}
+
+
+{block name="content"}
+
+<div id="mo" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>修改信息</h4>
+				<button class="close" style="margin-top: -40px; margin-right: 6px;" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" action="">
+					<input type="" name="">
+					<div class="form-group">
+						<label for="teachername" class="col-sm-2 control-label">姓名</label>
+						<div class="col-sm-10">  
+							<input id="teachername" type="text" class="form-control list-inline" value="{$teacherInfo.name}" name="teachername">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="mobile" class="col-sm-2 control-label">联系电话</label>
+						<div class="col-sm-10">  
+							<input id="mobile" type="text" class="form-control list-inline" value="{$teacherInfo.mobile}" name="mobile"></input>
+						</div>
+					</div>					
+				</form>
+			</div>
+			<!-- 隐藏域，用来传递主键 -->
+			<input type="hidden" value="{teacherInfo.id}" name="id">
+			<div class="modal-footer">
+				<button class="sub btn btn-success">提交</button>
+				<button class="btn btn-danger" data-dismiss="modal">取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{/block}
+
+

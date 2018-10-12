@@ -1,0 +1,139 @@
+{extend name="common/base"}
+
+{block name="seo"}
+	<title>{$title|default='标题'}</title>
+	<meta name="keywords" content="{$keywords|default='关键字'}">
+	<meta name="description" content="{$desc|default='描述'}">
+{/block}
+
+{block name="content"}
+	{include file="common/header"}
+	<div class="page-content-area">
+		<div>
+			<a href="{:url('teacher/teacherAdd')}" style="border-radius: 5px; margin: 3px;" class="ra btn btn-primary">添加教师</a>
+			<a style="border-radius: 5px; margin: 3px;" class="ra btn btn-primary">批量恢复</a>
+		</div>
+		<table class="table table-hover" style="width: 90%; text-align: center;">
+			<thead>
+				<tr>
+					<td>序号</td>
+					<td>姓名</td>
+					<td>学历</td>
+					<td>毕业院校</td>
+					<td>联系方式</td>
+					<td>负责班级</td>
+					<td>操作</td>
+				</tr>
+			</thead>
+			<tbody>
+				{volist name="teacherInfo" id="vo"}
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.name}</td>					
+					<td>
+					{if condition="$vo.degree eq 1"}专科
+					{elseif condition="$vo.degree eq 2" /}本科
+					{else /}研究生
+					{/if}
+					</td>
+					<td>{$vo.school}</td>
+					<td>{$vo.mobile}</td>
+					<td>{$vo.grade.name}</td>
+					<td>
+						<button style="line-height: 10px; height: 30px;" class="edit btn btn-primary">编辑</button>
+						<button style="line-height: 10px; height: 30px;" class="del btn btn-warning">删除</button>
+					</td>
+				</tr>
+				{/volist}
+			</tbody>
+		</table>
+	</div>
+
+
+<div id="mo" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>修改信息</h4>
+				<button class="close" style="margin-top: -40px; margin-right: 6px;" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" action="">
+					
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">姓名</label>
+						<div class="col-sm-10">  
+							<input type="hidden" class="tea_id form-control list-inline" value="123" name="id">
+							<input id="name" type="text" value="" class="form-control list-inline" name="name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="mobile" class="col-sm-2 control-label">联系电话</label>
+						<div class="col-sm-10">  
+							<input id="mobile" type="text" value="" class="form-control list-inline" name="mobile"></input>
+						</div>
+					</div>					
+				</form>
+			</div>
+			<!-- 隐藏域，用来传递主键 -->
+			
+			<div class="modal-footer">
+				<button class="sub btn btn-success">提交</button>
+				<button class="btn btn-danger" data-dismiss="modal">取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{/block}
+
+{block name="newjs"}
+<script>
+	$(function(){
+		//点击编辑界面
+		$('.edit').on('click', function(){
+			// $('#mo').modal('show');
+			var num = $('.edit').index(this);
+			var tea_id = $('tbody tr').eq(num).find('td').eq(0).text();
+			$('.tea_id').val(tea_id);
+			// alert($('td').eq(0).text());
+			$('#mo').modal('show');			
+		});
+
+		$('.sub').on('click', function(){
+			$.ajax({
+				type : "POST",
+				url : "{:url('teacher/teacherEdit')}",
+				data : $('form').serialize(),
+				dataType : 'json',
+				success : function(data){
+					if(data == 1){
+						alert('成功修改信息');
+						$('#mo').modal('hide');
+					}else{
+						alert('修改信息失败...');
+					}
+				}
+			});
+		});
+
+		$('.del').on('click', function(){
+
+
+		});
+		
+		
+		
+	});
+
+//编辑教师页面
+function to_next(url){
+	$.get(url);
+	$('#add').modal('show');
+}
+</script>
+{/block}
+
+
+
+

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<!-- <h1>HelloWorld</h1> -->
+	
+{volist name = 'list' id = 'admin'}
+<table>
+	<div class="info">
+		<tr>
+			<td style="width: 100px">ID : {$admin.id}</td>
+			<td>Name : {$admin.admin_name}</td>
+		</tr>
+	</div>
+</table>
+{/volist}
+
+
+</body>
+</html>

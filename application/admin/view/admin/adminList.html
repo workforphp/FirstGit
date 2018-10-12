@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>管理员界面</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/bootstrap.css">
+</head>
+<style type="text/css">
+	a{
+		text-decoration: none;
+	}
+</style>
+<body>
+	<form action="" method="post" enctype="multipar/form-data">
+		<table class="table" style="text-align: center;">
+			<tr>
+				<td>编号</td>
+				<td>管理员名字</td>
+				<td></td>
+				<td>操作</td>
+			</tr>
+			{volist name='result' id='vo'}
+			<tr>
+				<td>{$vo.id}</td>
+				<td>{$vo.admin_name}</td>
+				<td><img style="width:50px;height: 50px;" src="__IMG__/1.jpg"></td>
+				<td>
+					<a href="{:url('admin/edit',array('id'=>$vo.id))}">编辑</a>
+					<a href="{:url('admin/delete',array('id'=>$vo.id))}">删除</a>
+				</td>
+			</tr>
+			{/volist}
+		<a href="{:url('admin/testmodel')}">返回添加管理员页面</a>
+		</table>
+	</form>
+	{$result->render()}
+</body>
+</html>
